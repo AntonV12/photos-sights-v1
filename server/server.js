@@ -8,17 +8,28 @@ import jwt from "jsonwebtoken";
 import * as cheerio from "cheerio";
 import unirest from "unirest";
 import { nanoid } from "nanoid";
+import https from "https";
+import fs from "fs";
+import _ from "underscore";
 
 const port = 5000;
+const host = "https://193.124.118.93";
 
 const app = express();
 const secret = "qwerty";
 
-app.use(cors({ credentials: true, origin: "http://localhost:4173" }));
+const options = {
+  key: fs.readFileSync("privkey.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
+const server = https.createServer(options, app);
+
+app.use(cors({ credentials: true, origin: "https://sights.antonv-training-domain.ru" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 
-const mongoClient = new mongodb.MongoClient("mongodb://localhost:27017/");
+const mongoClient = new mongodb.MongoClient(`mongodb://127.0.0.1:27017/`);
 let usersColl;
 let sightsColl;
 
@@ -106,8 +117,8 @@ app.post("/api/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: false,
-      secure: true,
-      sameSite: "strict",
+      /*       secure: true,
+      sameSite: "strict", */
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
 
@@ -404,7 +415,7 @@ app.delete("/api/sights/:sightId", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   connectToMongo();
-  console.log(`server running on http://localhost:${port}`);
+  console.log(`server running on ${host}:${port}`);
 });

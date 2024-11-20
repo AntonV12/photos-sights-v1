@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const host = "https://sights.antonv-training-domain.ru";
+
 export const loginUser = createAsyncThunk("auth/loginUser", async ({ name, password }, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/login", {
+    const response = await fetch(`${host}:5000/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +28,7 @@ export const loginUser = createAsyncThunk("auth/loginUser", async ({ name, passw
 
 export const fetchCurrentUser = createAsyncThunk("auth/fetchCurrentUser", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/current-user", {
+    const response = await fetch(`${host}:5000/api/current-user`, {
       method: "GET",
       credentials: "include",
     });
@@ -46,7 +48,7 @@ export const fetchCurrentUser = createAsyncThunk("auth/fetchCurrentUser", async 
 
 export const logoutUser = createAsyncThunk("auth/logoutUser", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/logout", {
+    const response = await fetch(`${host}:5000/api/logout`, {
       method: "POST",
       credentials: "include",
     });

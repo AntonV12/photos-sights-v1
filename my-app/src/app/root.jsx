@@ -14,12 +14,11 @@ function Root() {
   const sights = useSelector(selectAllSights);
 
   useEffect(() => {
-    if (!currentUser) {
-      dispatch(fetchCurrentUser());
-    }
+    dispatch(fetchCurrentUser());
+
     dispatch(fetchUsers());
     dispatch(fetchSights());
-  }, [dispatch, currentUser]);
+  }, [dispatch]);
 
   const logout = () => {
     dispatch(logoutUser());

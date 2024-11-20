@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const host = "https://sights.antonv-training-domain.ru";
+
 export const addUser = createAsyncThunk("users/addUser", async (user, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/users", {
+    const response = await fetch(`${host}:5000/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +25,7 @@ export const addUser = createAsyncThunk("users/addUser", async (user, { rejectWi
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/users");
+    const response = await fetch(`${host}:5000/api/users`);
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.error || "Failed to fetch users");

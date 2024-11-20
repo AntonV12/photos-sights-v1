@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const host = "https://sights.antonv-training-domain.ru";
+
 export const addSight = createAsyncThunk("sights/addSlice", async (sight, { rejectWithValue }) => {
   try {
-    const response = await fetch("http://localhost:5000/api/sights", {
+    const response = await fetch(`${host}:5000/api/sights`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +25,7 @@ export const addSight = createAsyncThunk("sights/addSlice", async (sight, { reje
 
 export const fetchSights = createAsyncThunk("sights/fetchSights", async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/sights`);
+    const response = await fetch(`${host}:5000/api/sights`);
     if (!response.ok) {
       const error = await response.json();
       throw new Error(error.error || "Failed to fetch users");
@@ -40,7 +42,7 @@ export const reactionClick = createAsyncThunk(
   "sights/reactionClick",
   async ({ sightId, userId, imageId, reaction }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/sights/${sightId}/images/${imageId}/reactions`, {
+      const response = await fetch(`${host}:5000/api/sights/${sightId}/images/${imageId}/reactions`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +66,7 @@ export const updateComments = createAsyncThunk(
   "sights/updateComments",
   async ({ id, sightId, userId, imageId, date, userName, comment, answer }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/sights/${sightId}/images/${imageId}/comments`, {
+      const response = await fetch(`${host}:5000/api/sights/${sightId}/images/${imageId}/comments`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -89,7 +91,7 @@ export const updateComment = createAsyncThunk(
   "sights/updateComment",
   async ({ id, sightId, imageId, answer }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/sights/${sightId}/images/${imageId}/comments/${id}`, {
+      const response = await fetch(`${host}:5000/api/sights/${sightId}/images/${imageId}/comments/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +114,7 @@ export const updateComment = createAsyncThunk(
 
 export const updateSight = createAsyncThunk("sights/updateSight", async (sight, { rejectWithValue }) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/sights/${sight._id}`, {
+    const response = await fetch(`${host}:5000/api/sights/${sight._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -134,7 +136,7 @@ export const updateSight = createAsyncThunk("sights/updateSight", async (sight, 
 
 export const deleteSight = createAsyncThunk("sights/deleteSight", async (sightId, { rejectWithValue }) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/sights/${sightId}`, {
+    const response = await fetch(`${host}:5000/api/sights/${sightId}`, {
       method: "DELETE",
     });
 
