@@ -10,7 +10,6 @@ import unirest from "unirest";
 import { nanoid } from "nanoid";
 import https from "https";
 import fs from "fs";
-import _ from "underscore";
 
 const port = 5000;
 const host = "https://193.124.118.93";
